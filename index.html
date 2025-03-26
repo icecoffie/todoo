@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    
+    <div id="container">
+        <div id="header">
+            <input type="text" id="title" placeholder="To-Do List">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+        </div>
+        
+        <input type="text" id="items" placeholder="Add New Item">
+        
+        <ul>
+            <li><span><i class='fa fa-trash-o'></i></span> Click Title To Edit</li>
+            <li><span><i class='fa fa-trash-o'></i></span> Buy a Mini Cooper</li>
+            <li><span><i class='fa fa-trash-o'></i></span> Midnight Blue</li>
+            <li><span><i class='fa fa-trash-o'></i></span> ITZY MIDZY NALJA</li>
+            <li><span><i class='fa fa-trash-o'></i></span> Follow @msync.matrix on instagram</li>
+        </ul>
+    </div>
+</body>
+</html>
+
+<style>
+    body {
+    font-family: 'Roboto', sans-serif;
+    background: #606c88;
+    background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);
+    background: linear-gradient(to right, #3f4c6b, #606c88);
+    cursor: default;
+}
+
+#container {
+    opacity: 0;
+    box-shadow: 0 0 3px rgba(0,0,0,0.1);
+    width: 330px;
+    margin: 80px auto;
+    background-color: #f7f7f7;
+}
+
+#header {
+    width: 100%;
+    border: 0;
+    margin: 0;
+    color: #ffffff;
+    background-color: #232323;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+#title {
+    color: #ffffff;
+    background-color: #232323;
+    margin: 0;
+    border: 0;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 400;
+    width: 64%;
+}
+
+#title::-webkit-input-placeholder {
+  color: #ffffff;
+}
+#title::-moz-placeholder {
+  color: #ffffff;
+}
+#title:-ms-input-placeholder {
+  color: #ffffff;
+}
+#title:-moz-placeholder {
+  color: #ffffff;
+}
+
+#title:focus {
+    outline: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    color: #666;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+}
+
+li::selection {
+    background: none;
+}
+
+li:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+span {
+    background-color: #e74c3c;
+    color: #fff;
+    height: 40px;
+    width: 0;
+    opacity: 0;
+    display: inline-block;
+    margin-right: 20px;
+    text-align: center;
+    transition: all 200ms linear;
+}
+
+li:hover span {
+    width: 40px;
+    opacity: 1;
+}
+
+#items {
+    color: #232323;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 18px;
+    background-color: #f7f7f7;
+    border: 3px solid rgba(0,0,0,0);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 13px 13px 13px 20px;
+    height: 40px;
+}
+
+#items:focus {
+    background: #ffffff;
+    border: 3px solid #232323;
+    outline: 0;
+}
+
+.fa-pencil {
+    float: right;
+    margin: 10px 20px 10px 10px;
+    z-index: 1;
+}
+
+.fa-trash-o {
+    line-height: 40px;
+}
+
+.done {
+    color: gray;
+    text-decoration: line-through;
+}
+</style>
+
+<script>
+    $(document).ready(function(){
+
+$('#container').animate({opacity: 1}, 600, "linear");
+
+$('ul').on('click', 'li', function(){
+    $(this).toggleClass('done').blur();
+});
+$('ul').on('click', 'span', function(event){
+    $(this).parent().fadeOut(500, function(){
+        $(this).remove(); 
+    }); 
+    event.stopPropagation(); 
+});
+
+$('#items').on('keypress', function(event){
+    if(event.which === 13 && $(this).val() !== "") {
+        var newToDo = $(this).val().replace(/</g, "&lt;").replace(/>/g, "&gt;"); 
+        $('ul').append('<li><span><i class="fa fa-trash-o"></i></span> ' + newToDo + '</li>'); 
+        $(this).val("").blur(); 
+    }
+});
+
+$("#title").on('keypress', function(event){
+    if(event.which === 13) {
+        var title = $(this).val().replace(/</g, "").replace(/>/g, "");
+        $(this).attr("placeholder", title).blur();
+    }
+});
+
+$('.fa-pencil').on('click', function(){
+    $('#items').fadeToggle();
+});
+
+});
+</script>
